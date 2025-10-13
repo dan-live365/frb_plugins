@@ -190,6 +190,11 @@ class AndroidEnvironment {
       rustFlags = '$rustFlags\x1f';
     }
     rustFlags = '$rustFlags-L\x1f$workaroundDir';
+    //Add 16 KiB page size flags if supported
+    if (ndkVersion.major >= 26) {
+      rustFlags +=
+          '\x1f-C\x1flink-arg=-z\x1f-C\x1flink-arg=max-page-size=16384';
+    }
     return rustFlags;
   }
 }
